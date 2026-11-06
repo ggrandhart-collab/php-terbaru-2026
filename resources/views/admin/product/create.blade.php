@@ -1,0 +1,96 @@
+@extends('admin.layouts.app')
+@section('title', 'Tambah Produk')
+@section('subtitle', 'Tambahkan Produk Baru untuk ditampilkan di PPKD Sticker')
+
+@section('content')
+<form action="{{ route('admin.product.store') }}" method="post" enctype="multipart/form-data">
+    @csrf
+    <div class="mb-3">
+        <label for="">Nama Produk</label>
+        <input type="text" name="name" class="form-control" required>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="mb-3">
+                <label for="" class="form-label">Slug (optional)</label>
+                <input type="text" name="slug" class="form-control">
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="mb-3">
+                <label for="">Kategori</label>
+                <select name="category_id" class="form-select">
+                    <option value="">Pilih Kategori</option>
+                    @foreach ($categories as $c)
+                    <option value="{{ $c->id }}">{{ $c->name  }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="">Deskripsi Singkat</label>
+        <input type="text" name="brief_description" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="">Deskripsi</label>
+        <textarea name="description" id="" cols="30" rows="10" class="d-none"></textarea>
+        <div id="editor">{!! old('description') !!}</div>
+    </div>
+
+    <div class="row">
+        <div class="mb-3">
+            <label for="">Harga</label>
+            <input type="text" name="price" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="">Harga Art Cartoon</label>
+            <input type="number" name="price_art_cartoon" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="">Harga Art Paper</label>
+            <input type="number" name="price_art_paper" class="form-control">
+        </div>
+    </div>
+    <div class="row">
+        <div class="mb-3">
+            <label for="" class="form-label">Harga Laminating DOF</label>
+            <input type="number" name="price_art_dof" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Harga Laminating Glossy</label>
+            <input type="number" name="price_art_glossy" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Harga Potong (Min 5x5 cm)</label>
+            <input type="number" name="cutting_price" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Harga HVS</label>
+            <input type="number" name="price_art_hvs" class="form-control">
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="">Gambar</label>
+        <div class="row align-items-center mb-2 image-input-row">
+            <div class="col-md-5">
+                <input type="file" name="images[]" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <input type="text" name="alt[] class="form-control>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-danger w-100" onclick="removeImageInput(this)" disabled>X</button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button type="button" class="btn btnj-primary w-30" id="add-image-btn">+ Tambah Gambar Lain</button>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn-custom btn-custom-primary">Simpan</button>
+        <a href="{{ url()->previous() }}" class="btn-custom btn-custom-warning">Kembali</a>
+    </div>
+</form>
+@endsection
